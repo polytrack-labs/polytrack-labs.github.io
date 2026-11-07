@@ -1,17 +1,10 @@
 ---
 /**
- * Breadcrumbs.astro — Accessible breadcrumb navigation with BreadcrumbList Schema
- *
- * Generates both the visual breadcrumb trail and the corresponding
- * JSON-LD BreadcrumbList schema for rich results in search engines.
- *
- * Usage:
- *   <Breadcrumbs items={[
- *     { label: "Home", href: "/" },
- *     { label: "Blog", href: "/blog" },
- *     { label: "Post Title" }  // Current page (no href)
- *   ]} />
+ * Breadcrumbs — accessible trail plus the matching BreadcrumbList JSON-LD.
+ * Items receive already-resolved hrefs (base path included).
  */
+import JsonLd from './JsonLd.astro';
+import { SITE_ORIGIN } from '../../config/site';
 
 export interface BreadcrumbItem {
   label: string;
@@ -23,35 +16,32 @@ interface Props {
 }
 
 const { items } = Astro.props;
-const siteUrl = Astro.site?.toString() ?? 'https://astro-seo-theme.vercel.app';
 
-// Build BreadcrumbList JSON-LD
-const breadcrumbSchema = {
-  '@context': 'https://schema.org',
+const schema = {
   '@type': 'BreadcrumbList',
   itemListElement: items.map((item, index) => ({
     '@type': 'ListItem',
     position: index + 1,
     name: item.label,
-    ...(item.href && {
-      item: new URL(item.href, siteUrl).toString(),
-    }),
+    ...(item.href ? { item: new URL(item.href, SITE_ORIGIN).toString() } : {}),
   })),
 };
 ---
 
-<nav aria-label="Breadcrumb" class="text-sm">
-  <ol class="flex flex-wrap items-center gap-1.5 text-[var(--text-tertiary)]">
+<JsonLd schema={schema} />
+
+<nav aria-label="Breadcrumb">
+  <ol class="flex flex-wrap items-center gap-2 text-xs text-[var(--text-tertiary)]">
     {items.map((item, index) => (
-      <li class="flex items-center gap-1.5">
+      <li class="flex items-center gap-2">
         {index > 0 && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-3.5 w-3.5 shrink-0 opacity-50"
-            fill="none"
             viewBox="0 0 24 24"
+            fill="none"
             stroke="currentColor"
             stroke-width="2"
+            class="h-3 w-3 shrink-0 opacity-50"
             aria-hidden="true"
           >
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
@@ -62,7 +52,7 @@ const breadcrumbSchema = {
             {item.label}
           </a>
         ) : (
-          <span class="font-medium text-[var(--text-primary)]" aria-current="page">
+          <span class="font-medium text-[var(--text-secondary)]" aria-current="page">
             {item.label}
           </span>
         )}
@@ -70,9 +60,3 @@ const breadcrumbSchema = {
     ))}
   </ol>
 </nav>
-
-<script
-  type="application/ld+json"
-  is:inline
-  set:html={JSON.stringify(breadcrumbSchema, null, 2)}
-></script>

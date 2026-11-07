@@ -2,14 +2,16 @@
 import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
-import react from '@astrojs/react';
-import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://astro-seo-theme.vercel.app',
+  // GitHub Pages user site: https://polytrack-labs.github.io/
+  // If you rename the repository, update BASE_PATH in src/config/site.ts too.
+  site: 'https://polytrack-labs.github.io',
+  base: '/',
   output: 'static',
+  trailingSlash: 'always',
 
   i18n: {
     defaultLocale: 'en',
@@ -24,8 +26,6 @@ export default defineConfig({
   },
 
   integrations: [
-    react(),
-    mdx(),
     sitemap({
       i18n: {
         defaultLocale: 'en',
@@ -34,21 +34,12 @@ export default defineConfig({
           es: 'es-ES',
         },
       },
+      // The game bundle and its assets are not pages.
+      filter: (page) => !page.includes('/poly-track/'),
     }),
   ],
 
-  // Enable View Transitions
-  prefetch: {
-    prefetchAll: true,
-  },
-
   build: {
     inlineStylesheets: 'always',
-  },
-
-  markdown: {
-    shikiConfig: {
-      theme: 'dracula',
-    },
   },
 });

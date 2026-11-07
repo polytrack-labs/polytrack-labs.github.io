@@ -1,17 +1,46 @@
-# Astro SEO Theme
+# PolyTrack Online
 
-> The ultimate open-source Astro theme for B2B/SaaS marketing websites with advanced SEO, GEO & AEO optimization.
+> Play PolyTrack online for free in the browser: a low-poly 3D racing game with a
+> built-in track editor, community tracks, ghost replays, online leaderboards and
+> multiplayer lobbies. No download, no account, no install.
 
-## About
-Astro SEO Theme is an open-source website template built with Astro, Tailwind CSS, and React. It is specifically designed to provide perfect Lighthouse scores, Semantic HTML, and Generative Engine Optimization (GEO) out of the box.
+PolyTrack is created by Kodub. This site is an unofficial fan mirror that hosts
+version 0.6.3 of the official web build as static files, plus written guides.
 
-## Key Technical Features
-- Built on Astro 5.0 and Tailwind CSS v4.
-- Generates 100/100 Lighthouse SEO and Accessibility scores.
-- Implements comprehensive Schema.org JSON-LD structured data.
-- Includes a fully responsive, CSS-only megamenu and zero-JS mobile navigation.
-- Native multi-language (i18n) support with automatic `hreflang` tag generation.
+## Play
 
-## Resources
-- [GitHub Repository](https://github.com/druedaro/astro-seo-theme)
-- [Live Demo](https://astro-seo-theme.vercel.app)
+- [Play PolyTrack](https://polytrack-labs.github.io/) — the game loads in the
+  page; keyboard controls are W A S D or the arrow keys.
+
+## Guides
+
+- [How to Play](https://polytrack-labs.github.io/how-to-play/) — the rules of a
+  run, checkpoints, ghost replays and the habits that make you faster.
+- [Controls](https://polytrack-labs.github.io/controls/) — every key binding,
+  including camera, pause and track editor shortcuts.
+- [Track Editor](https://polytrack-labs.github.io/track-editor/) — building,
+  testing and sharing custom tracks.
+- [Unblocked](https://polytrack-labs.github.io/unblocked/) — why the game runs
+  on restricted school and work networks, and how to fix a game that will not start.
+
+## Site
+
+- [About](https://polytrack-labs.github.io/about/)
+- [Privacy Policy](https://polytrack-labs.github.io/privacy/)
+- [Terms of Use](https://polytrack-labs.github.io/terms/)
+- [Spanish version](https://polytrack-labs.github.io/es/)
+
+## Español
+
+- [Jugar PolyTrack](https://polytrack-labs.github.io/es/) — la misma guía en español.
+- [Cómo jugar](https://polytrack-labs.github.io/es/how-to-play/) ·
+  [Controles](https://polytrack-labs.github.io/es/controls/) ·
+  [Editor de pistas](https://polytrack-labs.github.io/es/track-editor/) ·
+  [Sin bloqueos](https://polytrack-labs.github.io/es/unblocked/)
+
+## Facts
+
+- Game: PolyTrack 0.6.3, free, browser-based, WebGL.
+- Genres: racing, arcade, level editor.
+- Platforms: any modern browser including Chromebooks; touch controls on mobile.
+- Cost: free, no account, no advertising on this mirror.

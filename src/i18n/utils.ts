@@ -1,55 +1,62 @@
 /**
- * i18n utility functions for Astro SEO Theme.
+ * i18n helpers.
  *
- * Usage in .astro components:
- *   import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
- *   const lang = getLangFromUrl(Astro.url);
- *   const t = useTranslations(lang);
- *   const localPath = getLocalizedPath(lang, '/about');
+ * All helpers are aware of the GitHub Pages base path, so they work both in
+ * development (`/`) and on a project page (`/repo/`).
  */
 
-import { ui, defaultLang, type Lang } from './ui';
+import { BASE_PATH, href } from '../config/site';
+import { ui, defaultLang, type Lang, type UIKey } from './ui';
 
-/**
- * Extract the current language from the URL pathname.
- * Returns 'es' for /es/..., otherwise returns 'en'.
- */
+/** Remove the deployment base path from a pathname. */
+export function stripBase(pathname: string): string {
+  if (BASE_PATH === '/') return pathname;
+  const stripped = pathname.startsWith(BASE_PATH) ? pathname.slice(BASE_PATH.length) : pathname;
+  return stripped.startsWith('/') ? stripped : `/${stripped}`;
+}
+
+/** Extract the current language from the URL pathname. */
 export function getLangFromUrl(url: URL): Lang {
-  const [, lang] = url.pathname.split('/');
-  if (lang in ui) return lang as Lang;
+  const [, first] = stripBase(url.pathname).split('/');
+  if (first && first in ui) return first as Lang;
   return defaultLang;
 }
 
-/**
- * Returns a translation function for the given language.
- * Falls back to defaultLang if a key is missing.
- */
+/** Returns a translation function for the given language. */
 export function useTranslations(lang: Lang) {
-  return function t(key: keyof (typeof ui)[typeof defaultLang]): string {
+  return function t(key: UIKey): string {
     return (ui[lang] as Record<string, string>)?.[key] ?? ui[defaultLang][key];
   };
 }
 
 /**
- * Generate a localized path.
- * - For 'en' (default): returns path as-is (e.g. '/about')
- * - For 'es': prepends /es (e.g. '/es/about')
+ * Build a link for a language.
+ * - en (default): `/how-to-play/`
+ * - es: `/es/how-to-play/`
+ * Both are prefixed with the deployment base path.
  */
-export function getLocalizedPath(lang: Lang, path: string): string {
-  if (lang === defaultLang) return path;
-  return `/${lang}${path}`;
+export function localizedHref(lang: Lang, path = '/'): string {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  if (lang === defaultLang) return href(p);
+  return href(p === '/' ? '/es' : `/es${p}`);
 }
 
-/**
- * Get the alternate language path for hreflang tags.
- * If current lang is 'en', returns the /es/ version and vice versa.
- */
-export function getAlternateLocales(currentPath: string): { lang: Lang; href: string }[] {
-  // Strip any existing locale prefix
-  const cleanPath = currentPath.replace(/^\/(es)\//, '/').replace(/^\/(es)$/, '/');
+/** Language-independent path of the current URL, without base or locale. */
+export function currentPathWithoutLocale(url: URL): string {
+  const path = stripBase(url.pathname).replace(/^\/(es)(?=\/|$)/, '');
+  return path === '' ? '/' : path;
+}
 
-  return [
-    { lang: 'en', href: cleanPath },
-    { lang: 'es', href: `/es${cleanPath === '/' ? '' : cleanPath}` },
-  ];
+/** Alternates for hreflang tags: the same page in every language. */
+export function alternatesFor(url: URL): { lang: Lang; href: string }[] {
+  const path = currentPathWithoutLocale(url);
+  return (Object.keys(ui) as Lang[]).map((lang) => ({
+    lang,
+    href: localizedHref(lang, path),
+  }));
+}
+
+/** Map a language code to the value expected by hreflang. */
+export function hreflangCode(lang: Lang): string {
+  return lang === 'es' ? 'es-ES' : 'en-US';
 }

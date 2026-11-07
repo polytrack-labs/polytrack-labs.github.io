@@ -1,129 +1,109 @@
 ---
+/**
+ * BaseLayout — document shell, metadata and structured data hooks.
+ *
+ * Every URL in the head is absolute and includes the deployment base path, so
+ * the same build works on a GitHub Pages project page or on a custom domain.
+ */
 import '../styles/global.css';
-import { getLangFromUrl, useTranslations, getAlternateLocales } from '../i18n/utils';
-
-// Self-host Inter font for 100/100 PageSpeed Insights score
 import '@fontsource-variable/inter';
+
+import { SITE, SITE_ORIGIN, absolute, absoluteAsset } from '../config/site';
+import { getLangFromUrl, alternatesFor, hreflangCode } from '../i18n/utils';
 
 interface Props {
   title: string;
   description: string;
   image?: string;
-  canonicalUrl?: string;
+  /** Page path relative to the site root, e.g. `/about/`. */
+  canonicalPath?: string;
   ogType?: 'website' | 'article';
   noindex?: boolean;
-  publishedTime?: Date;
-  modifiedTime?: Date;
-  author?: string;
-  lang?: string;
-  appendSiteName?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
 }
-
-const detectedLang = getLangFromUrl(Astro.url);
 
 const {
   title,
   description,
-  image = '/og-default.png',
-  canonicalUrl,
+  image = '/og-cover.jpg',
+  canonicalPath,
   ogType = 'website',
   noindex = false,
   publishedTime,
   modifiedTime,
-  author,
-  lang = detectedLang,
-  appendSiteName = true,
 } = Astro.props;
 
-const t = useTranslations(detectedLang);
-const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://astro-seo-theme.vercel.app';
-const currentUrl = canonicalUrl ?? new URL(Astro.url.pathname, siteUrl).toString();
-const ogImageUrl = new URL(image, siteUrl).toString();
-const siteName = 'Astro SEO Theme';
-const fullTitle = appendSiteName ? `${title} | ${siteName}` : title;
-const alternateLocales = getAlternateLocales(Astro.url.pathname);
+const lang = getLangFromUrl(Astro.url);
+const canonical = canonicalPath
+  ? new URL(absolute(canonicalPath)).toString()
+  : Astro.url.origin + Astro.url.pathname;
+const ogImage = absoluteAsset(image);
+const htmlLang = lang === 'es' ? 'es' : 'en';
+const alternates = alternatesFor(Astro.url).map((alt) => ({
+  ...alt,
+  url: new URL(alt.href, SITE_ORIGIN).toString(),
+}));
+const defaultAlt = alternates.find((alt) => alt.lang === 'en') ?? alternates[0];
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-smooth overflow-x-hidden">
+<html lang={htmlLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- Primary Meta Tags -->
-    <title>{fullTitle}</title>
-    <meta name="title" content={fullTitle} />
-    <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
 
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={SITE.themeColor} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href={currentUrl} />
-
-    <!-- Hreflang tags for i18n -->
-    {alternateLocales.map(({ lang: altLang, href }) => (
-      <link
-        rel="alternate"
-        hreflang={altLang === 'en' ? 'en-US' : 'es-ES'}
-        href={new URL(href, siteUrl).toString()}
-      />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((alt) => (
+      <link rel="alternate" hreflang={hreflangCode(alt.lang)} href={alt.url} />
     ))}
-    <link
-      rel="alternate"
-      hreflang="x-default"
-      href={new URL(alternateLocales[0].href, siteUrl).toString()}
-    />
+    <link rel="alternate" hreflang="x-default" href={defaultAlt.url} />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href={absoluteAsset('/favicon.svg')} />
+    <link rel="apple-touch-icon" href={absoluteAsset('/apple-touch-icon.png')} />
+
+    <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
-    <meta property="og:url" content={currentUrl} />
+    <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:site_name" content={siteName} />
-    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
-    {publishedTime && (
-      <meta property="article:published_time" content={publishedTime.toISOString()} />
-    )}
-    {modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
-    {author && <meta property="article:author" content={author} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta property="og:locale" content={lang === 'es' ? SITE.localeEs : SITE.locale} />
+    {alternates
+      .filter((alt) => alt.lang !== lang)
+      .map((alt) => (
+        <meta
+          property="og:locale:alternate"
+          content={alt.lang === 'es' ? SITE.localeEs : SITE.locale}
+        />
+      ))}
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={currentUrl} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogImageUrl} />
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <!-- RSS Feed -->
-    <link rel="alternate" type="application/rss+xml" title={siteName} href="/rss.xml" />
-
-    <!-- Dark Mode: Inline script to prevent FOUC -->
-    <script is:inline>
-      (function () {
-        const theme = localStorage.getItem('theme');
-        if (
-          theme === 'dark' ||
-          (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-          document.documentElement.classList.add('dark');
-        }
-      })();
-    </script>
-    <!-- Slot for page-specific head content (JSON-LD, hreflang, etc.) -->
     <slot name="head" />
   </head>
-  <body class="min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text-primary)] antialiased transition-colors duration-200">
-    <!-- Skip to main content (a11y) -->
+  <body class="min-h-screen antialiased">
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-primary-600 focus:px-4 focus:py-2 focus:text-white"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-[var(--accent)] focus:px-4 focus:py-2 focus:font-semibold focus:text-black"
     >
-      {t('skipToContent')}
+      Skip to content
     </a>
 
     <slot name="header" />

@@ -1,260 +1,118 @@
-<div align="center">
-  <h1>Astro SEO Theme</h1>
+# PolyTrack Online
 
-  <img src="public/social-preview.jpg" alt="Astro SEO Theme Cover" width="100%" />
+A fast, ad-free place to play [PolyTrack](https://www.kodub.com) in the browser, with a
+bilingual (EN/ES) SEO-first guide site around it. Built with [Astro](https://astro.build/),
+[Tailwind CSS v4](https://tailwindcss.com/) and zero client-side framework code; deployed as
+a static site to GitHub Pages.
 
-  <p><strong>The ultimate open-source SEO theme for Astro, designed for B2B SaaS and Enterprise.</strong></p>
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![Astro](https://img.shields.io/badge/Built_with-Astro-ff5a03?logo=astro&logoColor=white)](https://astro.build/)
-[![TailwindCSS](https://img.shields.io/badge/Styled_with-TailwindCSS_v4-38b2ac?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
-[![GitHub stars](https://img.shields.io/github/stars/druedaro/astro-seo-theme.svg?style=social&label=Star)](https://github.com/druedaro/astro-seo-theme)
-
-  <br />
-  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdruedaro%2Fastro-seo-theme">
-    <img src="https://vercel.com/button" alt="Deploy with Vercel" />
-  </a>
-  <br />
-  <a href="https://astro-seo-theme.vercel.app">View Demo</a>
-  ·
-  <a href="https://github.com/druedaro/astro-seo-theme/issues">Report Bug</a>
-  ·
-  <a href="https://github.com/druedaro/astro-seo-theme/issues">Request Feature</a>
-</div>
+**Live:** https://polytrack-labs.github.io/
 
 ---
 
-Astro SEO Theme is an open-source website template built with [Astro](https://astro.build/), [Tailwind CSS v4](https://tailwindcss.com/), and [React](https://react.dev/). You get a highly-optimized landing page, dynamic blog, case studies section, and enterprise-grade SEO tooling in one repo. It's designed so you can launch a premium web presence for a B2B SaaS or startup just by editing content, instead of wrestling with Core Web Vitals from scratch. Unlike generic themes, it ships with an incredibly strict SEO setup, multilingual i18n, security headers, and CI pipelines already wired up.
+## What this is
 
-Live demo: [astro-seo-theme.vercel.app](https://astro-seo-theme.vercel.app/)
+- **One game, nothing else.** The homepage loads a self-hosted copy of PolyTrack `0.6.3`
+  (`public/poly-track/`) in a click-to-load iframe. No other games, no categories.
+- **Guides for search.** How to Play, Controls, Track Editor, Unblocked, About, Privacy and
+  Terms — each in English (`/`) and Spanish (`/es/`).
+- **Structured data everywhere.** `VideoGame`, `WebSite`, `HowTo`, `Article`, `FAQPage` and
+  `BreadcrumbList` JSON-LD, generated from the same content objects that render the pages, so
+  markup and copy can never drift apart.
+- **No backend.** Pure static output. No accounts, no cookies, no analytics, no ads.
 
-<div align="center">
-  <br />
-  <img src="public/lighthouse-score.jpg" alt="Perfect 100/100 Lighthouse Score for Mobile and Desktop" width="100%" />
-  <br />
-  <sub><em>Validated perfectly for Mobile & Desktop Performance, Accessibility, Best Practices, and SEO.</em></sub>
-</div>
+## Requirements
 
-<br />
+- Node.js **>= 22.23.4** (Astro 7 refuses older runtimes — use Node 24 if in doubt)
+- npm
 
-- **Three content hubs in one.** High-converting landing page, markdown-driven blog, and case studies portfolio, all sharing a single responsive layout and megamenu.
-- **Enterprise-grade SEO.** Centralized `hreflang` generation, JSON-LD structured data, auto-generated sitemaps, and `robots.txt`. Built-in support for GEO (Generative Engine Optimization).
-- **100/100 Lighthouse Performance.** "Zero-JS by default" architecture using Astro Islands. Ships 0 KB of JavaScript to the client unless absolutely necessary (like the React-based dark mode toggle).
-- **Multilingual out of the box.** Complete English and Spanish implementations included. File-based routing makes it trivial to add more languages.
-- **Production-hardened.** Strict Content Security Policy (CSP) and security headers via `vercel.json`, GitHub Actions CI pipeline for type-checking and automated dependabot updates.
-- **Modern stack.** Astro 5, Tailwind CSS 4, React 19, TypeScript.
-- **AI-assistant friendly.** [`AI_GUIDE.md`](AI_GUIDE.md) tells Cursor, Copilot, and Claude where things live and which conventions to follow so you can prompt your way to a customized site.
-- **MIT licensed.** 100% free to use for personal and commercial projects.
-
-Pages are composed using semantic Astro components and native CSS grid/flexbox:
-
-```astro
----
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import HeroSection from '@/components/marketing/HeroSection.astro';
----
-
-<BaseLayout title="Home" description="The best SaaS product ever.">
-  <HeroSection />
-  <!-- Other components... -->
-</BaseLayout>
-```
-
----
-
-## Table of Contents
-
-- [Quick Start](#quick-start)
-- [Theme Configuration](#theme-configuration)
-  - [Global Meta Settings](#global-meta-settings)
-  - [Header & Megamenu](#header--megamenu)
-  - [Building Landing Pages](#building-landing-pages)
-  - [Managing Content Collections](#managing-content-collections)
-  - [Localization (i18n)](#localization-i18n)
-- [Deploying to Production](#deploying-to-production)
-- [Directory Layout](#directory-layout)
-- [Technical Highlights](#technical-highlights)
-  - [Generative Engine Optimization (GEO)](#generative-engine-optimization-geo)
-  - [Sitemap & Crawlability](#sitemap--crawlability)
-  - [Enterprise Security](#enterprise-security)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
-## Quick Start
-
-You need **Node.js 18+** and **npm** (or pnpm/yarn).
-
-**1. Create your repo.** You can use the Astro CLI to scaffold a new project directly from this template:
+## Commands
 
 ```bash
-npm create astro@latest -- --template druedaro/astro-seo-theme my-saas-website
-cd my-saas-website
+npm install      # install dependencies
+npm run dev      # dev server at http://localhost:4321
+npm run build    # static build into ./dist
+npm run preview  # serve ./dist locally
 ```
 
-**2. Install dependencies:**
+## Deploying to GitHub Pages
 
-```bash
-npm install
+The site deploys to the **user page** `polytrack-labs.github.io`, so it is served from the
+domain root. The origin and any sub-path are declared in exactly two places and must agree:
+
+| File | Field |
+| --- | --- |
+| `astro.config.mjs` | `site` + `base` |
+| `src/config/site.ts` | `SITE_ORIGIN` + `BASE_PATH` |
+
+Everything else — canonical URLs, hreflang, Open Graph, sitemap, JSON-LD, internal links —
+goes through `href()`, `asset()`, `absolute()` and `absoluteAsset()` in `src/config/site.ts`.
+Never hard-code a leading `/`, or links will break on GitHub Pages.
+
+To ship it:
+
+1. Push to `main`. `.github/workflows/deploy.yml` builds with Node 24 and deploys `dist/`.
+2. In **Settings → Pages**, set *Source* to **GitHub Actions**.
+3. `public/.nojekyll` is committed so the `_astro/` asset folder is not stripped by Jekyll.
+
+If you rename the repository or move to a custom domain, edit only the two rows above.
+
+## Project layout
+
 ```
-
-**3. Start the dev server:**
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:4321](http://localhost:4321). Edits to any file reload the page instantly.
-
-**4. Build for production:**
-
-```bash
-npm run build
-```
-
-This builds the site into `dist/`. Preview the result with `npm run preview`.
-
-> **Tip**
-> Only need one language? Simply delete the `src/pages/es` folder and remove the language picker from the Header component.
-
----
-
-## Theme Configuration
-
-### Global Meta Settings
-
-Everything site-wide lives in `src/layouts/BaseLayout.astro` and `src/i18n/ui.ts`. The default `siteName` is injected automatically into titles and metadata.
-
-> [!IMPORTANT]
-> Change the `site` property in `astro.config.mjs` before going to production. If you skip this, your auto-generated sitemap and `robots.txt` will point to the wrong domain, which will severely hurt your SEO.
-
-### Header & Megamenu
-
-Edit `src/components/layout/Header.astro` to modify the navigation. The theme includes a robust, CSS-only desktop megamenu and a mobile accordion menu built without heavy client-side JavaScript.
-
-<img width="1280" height="717" alt="AstroSEO" src="https://github.com/user-attachments/assets/1ef5f911-d08e-4dc0-95ed-89195c5730a4" />
-
-### Building Landing Pages
-
-Pages in `src/pages/` compose sections from `src/components/marketing/` and `src/components/seo/`. Open `src/pages/index.astro` to see the full homepage, then edit the props or remove sections you don't need.
-
-### Managing Content Collections
-
-Content is Markdown/MDX in `src/content/blog/` and `src/content/case-studies/`. Schemas are defined in `src/content.config.ts`. A case study looks like this:
-
-```mdx
----
-title: 'How TechCorp Scaled with Us'
-description: 'A deep dive into B2B growth.'
-client: 'TechCorp'
-date: 2026-09-15
----
-
-Case study body here.
-```
-
-### Localization (i18n)
-
-Marketing pages are file-based: `src/pages/` for English, `src/pages/es/` for Spanish. A `LanguagePicker` component in the Header switches between them. UI strings are centralized in `src/i18n/ui.ts`. `BaseLayout` automatically handles `hreflang` tag generation to prevent duplicate content penalties across languages.
-
----
-
-## Deploying to Production
-
-`npm run build` produces a static site in `dist/` that any static host can serve.
-
-> [!TIP]
-> The included `vercel.json` enforces strict security headers by default. If you plan to load external scripts (like Google Analytics) or images from other domains, you will need to adjust the `Content-Security-Policy` inside that file so they aren't blocked.
-
-- **Vercel:** Import the project directly. The included `vercel.json` adds strict security headers and caching rules.
-- **Netlify / Cloudflare Pages:** Works out of the box with zero configuration required.
-
----
-
-## Directory Layout
-
-```text
+public/
+  poly-track/           mirrored PolyTrack 0.6.3 build (332 files, ~16 MB)
+  robots.txt            sitemap pointer
+  llms.txt              short machine-readable site summary
+  favicon.svg  apple-touch-icon.png  og-cover.jpg  game-poster.jpg
 src/
-├── assets/                 # Local images and fonts
-├── components/
-│   ├── layout/             # Header, Footer, megamenu
-│   ├── marketing/          # Hero, BentoGrid, PricingTable, ContactForm
-│   ├── seo/                # Breadcrumbs, JsonLd, FaqSchema
-│   └── ui/                 # LanguagePicker, DarkModeToggle
-├── content/
-│   ├── authors/            # JSON files for author profiles (E-E-A-T)
-│   ├── blog/               # MDX posts separated by language (en/ & es/)
-│   └── case-studies/       # MDX case studies separated by language (en/ & es/)
-├── i18n/                   # ui.ts (translations) & utils.ts
-├── layouts/                # BaseLayout.astro & specific page layouts
-├── pages/                  # File-based routes
-│   ├── index.astro         # English Home
-│   ├── blog/               # English blog routes
-│   ├── case-studies/       # English case studies routes
-│   ├── es/                 # Spanish localized routes
-│   └── rss.xml.js          # RSS feed generator
-├── content.config.ts       # Astro Content Collections schemas
-└── styles/
-    └── global.css          # Tailwind v4 theme and typography vars
+  config/site.ts        base path, origin, brand, path helpers
+  data/pages.ts         ALL long-form copy (EN + ES) as typed objects
+  i18n/ui.ts            UI chrome strings (nav, buttons, footer, 404)
+  i18n/utils.ts         language detection, localized hrefs, hreflang pairs
+  lib/inline.ts         tiny inline-markdown renderer (links only)
+  layouts/BaseLayout    <head>: title, canonical, hreflang, OG, Twitter, favicon
+  layouts/PageLayout    breadcrumbs, TOC, section renderer, FAQ, JSON-LD
+  components/game/      click-to-load player, poster, fullscreen, 16:9 frame
+  components/home/      homepage composition
+  components/ui/        Steps, DataTable, FaqAccordion, FeatureGrid
+  components/seo/       JsonLd, Breadcrumbs
+  pages/index.astro     EN home        pages/es/index.astro   ES home
+  pages/[slug].astro    EN guide pages pages/es/[slug].astro  ES guide pages
+  pages/404.astro       static 404, noindex self-referencing
 ```
 
----
+### Editing content
 
-## Technical Highlights
+All copy lives in `src/data/pages.ts`. A page is a `PageContent` object with `title`,
+`description`, `updated`, and an array of sections; a section may hold paragraphs, a bullet
+list, numbered `steps`, or a key/action `table`. Add a slug to `pages.en` **and** `pages.es`
+and the routes, sitemap entries and JSON-LD follow automatically — the only manual step is the
+nav list in `src/components/layout/Header.astro`.
 
-### Generative Engine Optimization (GEO)
+## SEO notes
 
-`BaseLayout.astro` is the brain of the theme. It accepts `title`, `description`, `image`, and `articleDate` props. It automatically generates canonical URLs, Open Graph tags, Twitter cards, and `hreflang` alternate links.
+- Self-referencing canonical on every page, plus `hreflang` for `en-US`, `es-ES` and
+  `x-default`; `prefixDefaultLocale: false` keeps English at the root.
+- `trailingSlash: 'always'` matches how GitHub Pages serves `/dir/index.html`, so no internal
+  link ever triggers a redirect hop.
+- The sitemap intentionally excludes the mirrored game directory (`/poly-track/`) — raw game
+  assets should not compete with the guide pages in search results.
+- The 404 page is `noindex` and links back to the game.
 
-For structured data, the theme uses `src/components/seo/JsonLd.astro` and `FaqSchema.astro` to inject `<script type="application/ld+json">` payloads, crucial for Generative Engine Optimization (GEO).
+## Game asset & licensing
 
-### Sitemap & Crawlability
+PolyTrack is created and owned by **Kodub**. This repository is an unofficial fan mirror: it
+hosts the unmodified `0.6.3` web build because the official build cannot be embedded (its
+Content-Security-Policy allows framing only from `kodub.com` and `webgamer.io`). The mirror
+follows the conditions in Kodub's Terms of Service, §4 *Mods and Reuploads*:
 
-The `@astrojs/sitemap` integration generates the sitemap automatically at build time. `robots.txt` is served statically from the `public/` directory.
+- the site is non-commercial — no ads, no tracking, no paywall;
+- the game is credited to Kodub, with links to [kodub.com](https://www.kodub.com) and
+  [CrazyGames](https://www.crazygames.com/game/polytrack);
+- the in-game "unofficial version" notice is **left intact** (it is rendered in amber by the
+  build's own mod styling and must not be removed);
+- the build is unmodified apart from a `window.polytrackModConfiguration` snippet
+  (`modName`, `author`) and a favicon link in `public/poly-track/index.html`.
 
-### Enterprise Security
-
-`vercel.json` sets `Content-Security-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, and `X-Frame-Options` to ensure the site gets an A+ on security scanners like Mozilla Observatory.
-
-### Adding Analytics (Adjusting CSP)
-
-Because the default `Content-Security-Policy` (CSP) is strict, third-party scripts will be blocked by default. To add analytics like Google Analytics or Plausible, you must adjust the `Content-Security-Policy` header in `vercel.json` to allow those specific domains.
-
-**Example: Allowing Google Analytics**
-Modify the `script-src` and `connect-src` directives in `vercel.json`:
-
-```json
-"value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com;"
-```
-
-**Example: Allowing Plausible**
-
-```json
-"value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://plausible.io; connect-src 'self' https://plausible.io;"
-```
-
-### Formatting
-
-Code formatting is enforced using [Prettier](https://prettier.io/). The project includes `prettier-plugin-astro` and `prettier-plugin-tailwindcss` to automatically format `.astro` files and logically sort all Tailwind CSS classes.
-
-> [!NOTE]
-> Run `npm run format` locally before committing to ensure all files are perfectly formatted. If you use VS Code, the workspace is already configured to format on save.
-
----
-
-## Contributing
-
-- **Bugs and ideas:** open an issue.
-- **Pull requests:** welcome.
-
-See `CODE_OF_CONDUCT.md` and `CONTRIBUTING.md`.
-
-## License
-
-MIT. See `LICENSE`.
-
-<div align="center">
-  Crafted by <a href="https://github.com/druedaro">druedaro</a>.
-</div>
+The site code in `src/` is MIT licensed. Game art, models, audio and tracks remain the
+property of their respective authors and are **not** covered by that license.

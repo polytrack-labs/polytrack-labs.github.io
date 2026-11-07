@@ -4,133 +4,152 @@
 @plugin '@tailwindcss/typography';
 
 /*
- * Astro SEO Theme — Base Styles
- * Design system inspired by Linear, Vercel, Stripe.
+ * PolyTrack Online — arcade, dark-first design system.
+ * Deep navy surfaces, electric blue for structure, amber for actions.
  */
 
 @theme {
-  /* Brand Colors (Indigo - Lighter & More Vibrant) */
-  --color-primary-50: oklch(0.98 0.02 275);
-  --color-primary-100: oklch(0.95 0.04 275);
-  --color-primary-200: oklch(0.88 0.08 275);
-  --color-primary-300: oklch(0.8 0.12 275);
-  --color-primary-400: oklch(0.7 0.18 275);
-  --color-primary-500: oklch(0.6 0.22 275);
-  --color-primary-600: oklch(0.52 0.2 275);
-  --color-primary-700: oklch(0.45 0.16 275);
-  --color-primary-800: oklch(0.38 0.12 275);
-  --color-primary-900: oklch(0.3 0.09 275);
-  --color-primary-950: oklch(0.2 0.06 275);
+  /* Primary — electric blue (PolyTrack's UI accent) */
+  --color-primary-50: #eef3ff;
+  --color-primary-100: #dbe5ff;
+  --color-primary-200: #b9cbff;
+  --color-primary-300: #8caaff;
+  --color-primary-400: #6b8fff;
+  --color-primary-500: #4d78ff;
+  --color-primary-600: #345ce6;
+  --color-primary-700: #2847b8;
+  --color-primary-800: #213b8f;
+  --color-primary-900: #1b2f6b;
+  --color-primary-950: #111d40;
 
-  /* Neutral/Gray — Zinc-inspired with slight indigo tint for softer background */
-  --color-surface-50: oklch(0.985 0.005 275);
-  --color-surface-100: oklch(0.96 0.01 275);
-  --color-surface-200: oklch(0.92 0.01 275);
-  --color-surface-300: oklch(0.87 0.01 275);
-  --color-surface-400: oklch(0.71 0.01 275);
-  --color-surface-500: oklch(0.55 0.01 275);
-  --color-surface-600: oklch(0.45 0.01 275);
-  --color-surface-700: oklch(0.37 0.01 275);
-  --color-surface-800: oklch(0.27 0.01 275);
-  --color-surface-900: oklch(0.21 0.01 275);
-  --color-surface-950: oklch(0.14 0.01 275);
+  /* Surfaces — dark navy scale */
+  --color-surface-50: #f5f7ff;
+  --color-surface-100: #e7ebf7;
+  --color-surface-200: #c9d1e6;
+  --color-surface-300: #9aa6c4;
+  --color-surface-400: #6f7d9e;
+  --color-surface-500: #4c5776;
+  --color-surface-600: #333d5a;
+  --color-surface-700: #222a42;
+  --color-surface-800: #171e33;
+  --color-surface-900: #101527;
+  --color-surface-950: #080b16;
 
-  /* Accent — For CTAs and highlights */
-  --color-accent-400: oklch(0.75 0.18 160);
-  --color-accent-500: oklch(0.65 0.22 160);
-  --color-accent-600: oklch(0.55 0.2 160);
+  /* Accent — amber, used only for the main call to action */
+  --color-accent-300: #ffd08a;
+  --color-accent-400: #ffb459;
+  --color-accent-500: #ff9a2e;
+  --color-accent-600: #f07d10;
 
-  /* Typography */
   --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, monospace;
   --font-display: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 /* ================================================
-   Dark Mode — CSS custom properties approach
-   Prevents FOUC by using class-based toggling
+   Semantic tokens
    ================================================ */
 
 :root {
-  --bg: var(--color-surface-50);
-  --bg-secondary: var(--color-surface-100);
-  --text-primary: var(--color-surface-900);
-  --text-secondary: var(--color-surface-600);
-  --text-tertiary: var(--color-surface-600);
-  --border: var(--color-surface-200);
-  --border-hover: var(--color-surface-300);
-}
+  color-scheme: dark;
 
-.dark {
-  --bg: var(--color-surface-950);
-  --bg-secondary: var(--color-surface-900);
-  --text-primary: var(--color-surface-50);
-  --text-secondary: var(--color-surface-400);
-  --text-tertiary: var(--color-surface-400);
-  --border: var(--color-surface-800);
-  --border-hover: var(--color-surface-700);
+  --bg: #080b16;
+  --bg-secondary: #0f1526;
+  --bg-elevated: #161d33;
+
+  --text-primary: #eef2ff;
+  --text-secondary: #a7b2ce;
+  --text-tertiary: #8591ae;
+
+  --border: #212a44;
+  --border-hover: #33405f;
+
+  --primary: var(--color-primary-500);
+  --accent: var(--color-accent-500);
 }
 
 /* ================================================
-   Base resets & global styles
+   Base
    ================================================ */
 
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
 }
 
 body {
   background-color: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+  /* Faint grid, like the track editor's playfield */
+  background-image:
+    radial-gradient(60rem 40rem at 50% -10%, rgb(77 120 255 / 0.16), transparent 70%),
+    linear-gradient(to right, rgb(255 255 255 / 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.025) 1px, transparent 1px);
+  background-size:
+    auto,
+    64px 64px,
+    64px 64px;
+  background-attachment: fixed;
 }
 
-/* Focus styles for accessibility */
 :focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-primary-400);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-/* ================================================
-   AEO: Definition paragraph styling
-   First paragraph after a question-style H2 gets
-   highlighted for Featured Snippet optimization
-   (40-60 words is optimal length)
-   ================================================ */
-
-.prose h2:has(+ p) {
-  scroll-margin-top: 5rem;
-}
-
-/* Selection styling */
 ::selection {
-  background-color: var(--color-primary-200);
-  color: var(--color-primary-900);
-}
-
-.dark ::selection {
-  background-color: var(--color-primary-800);
-  color: var(--color-primary-100);
+  background-color: var(--color-primary-600);
+  color: #fff;
 }
 
 /* ================================================
-   Typography (Prose) Color Overrides
-   Ensures @tailwindcss/typography perfectly matches
-   our custom CSS variable design system in both modes.
+   Components
    ================================================ */
+
+@layer components {
+  .btn,
+  .btn-primary,
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold whitespace-nowrap transition-all duration-150;
+  }
+
+  .btn-primary {
+    @apply bg-[var(--accent)] text-[#1a1103] shadow-[0_0_0_1px_rgb(255_154_46_/_0.4),0_10px_30px_-10px_rgb(255_154_46_/_0.8)] hover:bg-[var(--color-accent-400)] active:translate-y-px;
+  }
+
+  .btn-secondary {
+    @apply border border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:border-[var(--border-hover)] hover:bg-[var(--bg-elevated)];
+  }
+
+  .card {
+    @apply rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)];
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--bg-secondary)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)];
+  }
+
+  .kbd {
+    @apply inline-flex min-w-[1.6rem] items-center justify-center rounded-md border border-[var(--border-hover)] border-b-2 bg-[var(--bg-elevated)] px-1.5 py-0.5 font-mono text-[0.8rem] font-semibold text-[var(--text-primary)];
+  }
+}
+
+/* ================================================
+   Prose (long-form pages)
+   ================================================ */
+
 .prose {
   --tw-prose-body: var(--text-secondary);
   --tw-prose-headings: var(--text-primary);
   --tw-prose-lead: var(--text-secondary);
-  --tw-prose-links: var(--color-primary-500);
+  --tw-prose-links: var(--color-primary-300);
   --tw-prose-bold: var(--text-primary);
   --tw-prose-counters: var(--text-tertiary);
-  --tw-prose-bullets: var(--border-hover);
+  --tw-prose-bullets: var(--color-primary-600);
   --tw-prose-hr: var(--border);
   --tw-prose-quotes: var(--text-primary);
   --tw-prose-quote-borders: var(--color-primary-500);
@@ -140,4 +159,82 @@ body {
   --tw-prose-pre-bg: var(--bg-secondary);
   --tw-prose-th-borders: var(--border);
   --tw-prose-td-borders: var(--border);
+  --tw-prose-invert-body: var(--text-secondary);
+  --tw-prose-invert-headings: var(--text-primary);
+
+  max-width: 68ch;
+}
+
+.prose h2 {
+  scroll-margin-top: 6rem;
+  letter-spacing: -0.02em;
+}
+
+.prose a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+
+.prose a:hover {
+  color: var(--color-primary-200);
+}
+
+.prose li::marker {
+  color: var(--color-primary-500);
+}
+
+/* Tables inside prose get a card look instead of bare rules */
+.prose table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  background-color: var(--bg-secondary);
+  font-size: 0.925rem;
+}
+
+.prose thead th {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.7rem 1rem;
+  border: 0;
+}
+
+.prose tbody td {
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.prose tbody td:first-child {
+  color: var(--text-primary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Utility: hide scrollbars on horizontal scroll containers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
