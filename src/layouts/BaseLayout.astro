@@ -8,7 +8,7 @@
 import '../styles/global.css';
 import '@fontsource-variable/inter';
 
-import { SITE, SITE_ORIGIN, absolute, absoluteAsset } from '../config/site';
+import { SITE, SITE_ORIGIN, ANALYTICS, absolute, absoluteAsset } from '../config/site';
 import { getLangFromUrl, alternatesFor, hreflangCode } from '../i18n/utils';
 
 interface Props {
@@ -97,6 +97,19 @@ const defaultAlt = alternates.find((alt) => alt.lang === 'en') ?? alternates[0];
     <meta name="twitter:image" content={ogImage} />
 
     <slot name="head" />
+
+    {/* Cloudflare Web Analytics: cookie-less, aggregate page-view counts.
+        `is:inline` keeps Astro from bundling the external module. */}
+    {
+      ANALYTICS.cloudflareToken && (
+        <script
+          is:inline
+          type="module"
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={`{"token": "${ANALYTICS.cloudflareToken}"}`}
+        />
+      )
+    }
   </head>
   <body class="min-h-screen antialiased">
     <a

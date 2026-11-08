@@ -64,3 +64,12 @@ export function absoluteAsset(path: string): string {
 
 /** The self-hosted game entry point. */
 export const GAME_SRC = asset('/poly-track/index.html');
+
+/**
+ * Traffic measurement. Cloudflare Web Analytics is cookie-less and reports
+ * aggregate numbers only; there is no identifier to opt out of and nothing to
+ * store in the browser. Leave the token empty to disable the beacon entirely.
+ */
+export const ANALYTICS = {
+  cloudflareToken: '6a01ded1cabd493aac922a141f11d487',
+} as const;

@@ -18,7 +18,8 @@ a static site to GitHub Pages.
 - **Structured data everywhere.** `VideoGame`, `WebSite`, `HowTo`, `Article`, `FAQPage` and
   `BreadcrumbList` JSON-LD, generated from the same content objects that render the pages, so
   markup and copy can never drift apart.
-- **No backend.** Pure static output. No accounts, no cookies, no analytics, no ads.
+- **No backend.** Pure static output. No accounts, no cookies, no ads. Page views are counted
+  with cookie-less Cloudflare Web Analytics (token in `src/config/site.ts`, empty to disable).
 
 ## Requirements
 

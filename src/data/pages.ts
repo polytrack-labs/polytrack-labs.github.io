@@ -766,8 +766,8 @@ export const pages: Record<'en' | 'es', PageContent[]> = {
       description:
         'What PolyTrack Online stores, what it does not collect, which third-party requests the game makes, and how to clear the data kept in your browser.',
       intro:
-        'Short version: this site has no accounts, no analytics and no advertising. The game keeps your settings in your own browser, and leaderboard features talk directly to the game’s servers.',
-      updated: '2026-11-07',
+        'Short version: this site has no accounts and no advertising. Traffic is counted with cookie-less, aggregate statistics, the game keeps your settings in your own browser, and leaderboard features talk directly to the game’s servers.',
+      updated: '2026-11-08',
       schema: 'Article',
       sections: [
         {
@@ -775,7 +775,7 @@ export const pages: Record<'en' | 'es', PageContent[]> = {
           heading: 'Summary',
           bullets: [
             'No account, no email address, no name is ever requested.',
-            'No analytics scripts, no advertising networks, no cross-site trackers are loaded by this page.',
+            'No advertising networks and no cross-site trackers. Page views are counted by Cloudflare Web Analytics, which sets no cookies and does not follow you between sites.',
             'Game settings, key bindings, custom tracks and ghost replays are stored in your browser’s local storage.',
             'Requests to the game’s leaderboard and multiplayer servers go to Kodub’s infrastructure, not to this site.',
           ],
@@ -786,6 +786,15 @@ export const pages: Record<'en' | 'es', PageContent[]> = {
           body: [
             'This site is served as static files by GitHub Pages. As with any web host, GitHub records standard technical information when it delivers a page — IP address, browser user agent, requested path and timestamp — for security and abuse prevention.',
             'This site has no application server and no database, so it does not create its own records of visitors and cannot look up an individual visitor.',
+          ],
+        },
+        {
+          id: 'analytics',
+          heading: 'Traffic statistics',
+          body: [
+            'Page views are counted with Cloudflare Web Analytics. The beacon loads from static.cloudflareinsights.com and reports aggregate numbers only — requested path, referring site, country, device class and page load timing.',
+            'It sets no cookies, stores nothing in your browser that identifies you, and does not build a profile of you across other websites. Because the reports are aggregated, this site cannot single out an individual visitor, and there is no personal record that could be deleted on request.',
+            'Blocking the beacon with an extension, a DNS filter or a browser setting has no effect on the site: the game and every page keep working exactly the same.',
           ],
         },
         {
@@ -1379,8 +1388,8 @@ export const pages: Record<'en' | 'es', PageContent[]> = {
       description:
         'Qué guarda PolyTrack Online, qué no recoge, qué peticiones externas hace el juego y cómo borrar los datos que quedan en tu navegador.',
       intro:
-        'Versión corta: este sitio no tiene cuentas, ni analítica, ni publicidad. El juego guarda tus ajustes en tu propio navegador y las clasificaciones hablan directamente con los servidores del juego.',
-      updated: '2026-11-07',
+        'Versión corta: este sitio no tiene cuentas ni publicidad. El tráfico se cuenta con estadísticas agregadas sin cookies, el juego guarda tus ajustes en tu propio navegador y las clasificaciones hablan directamente con los servidores del juego.',
+      updated: '2026-11-08',
       schema: 'Article',
       sections: [
         {
@@ -1388,7 +1397,7 @@ export const pages: Record<'en' | 'es', PageContent[]> = {
           heading: 'Resumen',
           bullets: [
             'Nunca se pide cuenta, correo electrónico ni nombre.',
-            'Esta página no carga analítica, redes publicitarias ni rastreadores entre sitios.',
+            'No hay redes publicitarias ni rastreadores entre sitios. Las visitas se cuentan con Cloudflare Web Analytics, que no usa cookies ni te sigue por otras webs.',
             'Los ajustes, controles, pistas personalizadas y fantasmas se guardan en el almacenamiento local del navegador.',
             'Las peticiones a las clasificaciones y al multijugador van a la infraestructura de Kodub, no a este sitio.',
           ],
@@ -1399,6 +1408,15 @@ export const pages: Record<'en' | 'es', PageContent[]> = {
           body: [
             'Este sitio se sirve como archivos estáticos mediante GitHub Pages. Como cualquier alojamiento web, GitHub registra información técnica estándar al entregar una página —dirección IP, agente de usuario, ruta solicitada y fecha— por seguridad y prevención de abusos.',
             'Este sitio no tiene servidor de aplicaciones ni base de datos, así que no crea registros propios de visitantes ni puede identificar a una persona concreta.',
+          ],
+        },
+        {
+          id: 'analytics',
+          heading: 'Estadísticas de tráfico',
+          body: [
+            'Las visitas se cuentan con Cloudflare Web Analytics. El beacon se carga desde static.cloudflareinsights.com y solo envía datos agregados: ruta solicitada, sitio de procedencia, país, tipo de dispositivo y tiempo de carga.',
+            'No usa cookies, no guarda en tu navegador nada que te identifique y no construye un perfil tuyo en otras webs. Como los informes son agregados, este sitio no puede señalar a una persona concreta y no existe un registro personal que se pueda borrar a petición.',
+            'Bloquear el beacon con una extensión, un filtro DNS o una opción del navegador no afecta al sitio: el juego y todas las páginas siguen funcionando igual.',
           ],
         },
         {
